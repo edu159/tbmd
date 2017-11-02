@@ -1,0 +1,31 @@
+IDIR2 =/apps/gsl/1.16/include
+IDIR =../include
+CC=icc
+CFLAGS=-I$(IDIR) -I$(IDIR2)
+
+ODIR=../build
+LDIR =../lib
+
+LIBS=-lgsl -lmkl
+
+_DEPS = File.h OutputDataFile.h ConfigFile.h InputDataFile.h MovieFile.h AttractiveEnergy.h  common.h  Energy.h  Hamiltonian.h  MDSimulation.h  Particle.h  ParticleSystem.h  RepulsiveEnergy.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+_OBJ = main.o File.o OutputDataFile.o ConfigFile.o InputDataFile.o MovieFile.o AttractiveEnergy.o  common.o  Energy.o  Hamiltonian.o  MDSimulation.o  Particle.o  ParticleSystem.o  RepulsiveEnergy.o
+OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+
+
+$(ODIR)/%.o: %.cpp $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+tbmd: $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) && mv tbmd ../build
+
+.PHONY: clean
+
+clean:
+	rm -f $(ODIR)/*.o $(ODIR)/tbmd
+
+dist:
+	tar -zcvf ../../gpp-tight-binding.tar.gz  ../../gpp-tight-binding --verbose
+
