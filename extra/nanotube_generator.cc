@@ -1,4 +1,6 @@
-// Here starts file map.cc that creates .xyz file for graphene edge or carbon nanotube of chosen size and chirality (zigzag/armchair). Output is directed to file map.xyz
+// Here starts file map.cc that creates .xyz file for graphene edge or carbon 
+// nanotube of chosen size and chirality (zigzag/armchair). Output is directed
+// to file map.xyz
 
 #include <iostream>
 #include <cmath>
